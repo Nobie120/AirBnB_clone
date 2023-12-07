@@ -38,7 +38,6 @@ class FileStorage:
         try:
             with open(FileStorage.__file_path) as file:
                 obj_dict = json.load(file)
-            from models.base_model import BaseModel
             for key, value in obj_dict.items():
                 class_name = value['__class__']
                 class_obj = globals()[class_name]
