@@ -31,7 +31,8 @@ class HBNBCommand(cmd.Cmd):
             error = 1
         else:
             class_name = arg.split()[0]
-            if class_name not in globals() or not issubclass(globals()[class_name], BaseModel):
+            if class_name not in globals() or not issubclass(
+                    globals()[class_name], BaseModel):
                 print(HBNBCommand.errors[1])
                 error = 1
         return error
@@ -156,10 +157,11 @@ class HBNBCommand(cmd.Cmd):
             elif type(args[3]) == "int":
                 value = int(args[3])
             else:
-                 value = str(args[3]).strip('"')
+                value = str(args[3]).strip('"')
 
             setattr(obj_value, args[2], value)
             obj_value.save()
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
