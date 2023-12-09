@@ -2,11 +2,16 @@
 """ The CLI module """
 import re
 import cmd
-from models import base_model, storage
+from models.base_model import BaseModel
+from models.user import User
+from models.place import Place
+from models.state import State
+from models.amenity import Amenity
+from models.review import Review
+from models.engine.file_storage import FileStorage
 
 
-BaseModel = base_model.BaseModel
-file_storage = storage
+file_storage = FileStorage()
 
 
 class HBNBCommand(cmd.Cmd):
@@ -113,14 +118,14 @@ class HBNBCommand(cmd.Cmd):
         instances based or not on the class name """
         args = arg.split()
         objects = file_storage.all()
-        if len(args) < 2:
+        if len(args) < 1:
             filtered = [str(instance) for instance in objects.values()]
             print(filtered)
         else:
             error = self.__error(arg)
             if not error:
                 filtered = [
-                        str(v) for k, v in objects.items() if args[1] in k
+                        str(v) for k, v in objects.items() if args[0] in k
                         ]
                 print(filtered)
 
