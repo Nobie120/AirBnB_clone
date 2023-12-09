@@ -67,8 +67,10 @@ class HBNBCommand(cmd.Cmd):
         """ default errors """
         args = (line.replace("(", ".").replace(")", ".").replace(
             '"', "").replace(",", "").split("."))
-        functions = {"all": self.do_all, "update": self.do_update,
-                "show": self.do_show, "destroy": self.do_destroy}
+        functions = {
+                "all": self.do_all, "update": self.do_update,
+                "show": self.do_show, "destroy": self.do_destroy
+                }
         try:
             cmd_args = args[0] + " " + args[2]
             func = functions[args[1]]
