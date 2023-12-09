@@ -65,7 +65,17 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, line):
         """ default errors """
-        pass
+        args = (line.replace("(", ".").replace(")", ".").replace(
+            '"', "").replace(",", "").split("."))
+        functions = {"all": self.do_all, "update": self.do_update,
+                "show": self.do_show, "destroy": self.do_destroy}
+        try:
+            cmd_args = args[0] + " " + args[2]
+            func = functions[args[1]]
+            func(cmd_args)
+
+        except Exception:
+            print("** Invalid Syntax: ", line, "**")
 
     def handle_keyboard_interrupt(self):
         """ handle ctrl+c """
