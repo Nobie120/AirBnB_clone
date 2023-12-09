@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ The user class module """
+from models.base_model import BaseModel
 
 
 class User(BaseModel):
@@ -8,4 +9,3 @@ class User(BaseModel):
     password = ""
     first_name = ""
     last_name = ""
-
