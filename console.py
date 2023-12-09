@@ -57,7 +57,7 @@ class HBNBCommand(cmd.Cmd):
         doesn't type any command """
         pass
 
-    def default(self):
+    def default(self, line):
         """ default errors """
         pass
 
@@ -122,6 +122,44 @@ class HBNBCommand(cmd.Cmd):
                         str(v) for k, v in objects.items() if args[1] in k
                         ]
                 print(filtered)
+
+    def do_update(self, arg):
+        """  Updates an instance based on the class name and id by adding
+        or updating attribute (save the change into the JSON file) """
+        file_storage.reload()
+        objects = file_storage.all()
+        error = self.__error(arg)
+        if not error:
+            error += self.__error_id(arg)
+        args = arg.split()
+        key = ".".join([args[0], args[1]])
+        if len(arg) < 3:
+            print('** attribute name missing **')
+            error += 1
+            return
+        elif len(arg) < 4:
+            print('** value missing **')
+            error += 1
+            return
+        if not error:
+            try:
+                obj_value = objects[key]
+            except KeyError:
+                print("** no instance found **")
+                return
+            if type(args[3]) == "str":
+                value = args[3].strip('"')
+                try:
+                    value = int(value)
+                except ValueError:
+                    pass
+            elif type(args[3]) == "int":
+                value = int(args[3])
+            else:
+                 value = str(args[3]).strip('"')
+
+            setattr(obj_value, args[2], value)
+            obj_value.save()
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
